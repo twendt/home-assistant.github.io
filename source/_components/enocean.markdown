@@ -19,19 +19,19 @@ The `enocean` component adds support for some of these devices. You will need a 
 
 There is currently support for the following device types within Home Assistant:
 
-- [Binary Sensor](/components/binary_sensor.enocean/) (wall switches)
-- [Sensor](/components/sensor.enocean/) (power meters)
-- [Light](/components/light.enocean/) (dimmers)
+- [Sensor](/components/sensor.enocean/)
+- [Light](/components/light.enocean/)
 - [Switch](/components/switch.enocean/)
 
 However, only a few devices have been confirmed to work. These are:
 
 - Eltako FUD61 dimmer
+- Eltako FSR61 switch
+- Eltako FHF window handle
 - Eltako FT55 battery-less wall switch
-- Jung ENOA590WW battery-less wall switch
-- Permundo PSC234 (switch and power monitor)
 
-Other devices will most likely need some changes in the Home Assistant code in order to work. Support for teaching of devices is also missing at this time.
+Other devices will most likely need some changes in the Home Assistant code in order to work.
+
 
 To integrate an EnOcean controller with Home Assistant, add the following section to your `configuration.yaml` file:
 
@@ -44,3 +44,13 @@ enocean:
 Configuration variables:
 
 - **device** (*Required*): The port where your device is connected to your Home Assistant host.
+
+
+Base ID:
+
+Every EnOcean adapter uses a unique Base ID. Starting from the Base ID the next 128 IDs can be used as sender IDs when sending telegrams to other devices like switches or dimmers.
+The Base ID of the adapter is requested during startup and visible in the logfile and also in a state called enocean.xxxxxxxx
+
+Teach In
+
+The component provides a service to send teahc in telegrams to devices. The device needs to be before the teach in service can be used. The only parameters for the service is the entity_id of the target device.
